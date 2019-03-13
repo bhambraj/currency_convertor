@@ -1,0 +1,19 @@
+{
+  "name": "currency_convertor_backend",
+  "version": "1.0.0",
+  "description": "Express server for currency_convertor",
+  "main": "server.js",
+  "scripts": {
+    "test": "TODO: Write tests",
+    "server": "nodemon server.js"
+  },
+  "author": "Jaskaran Bhambra",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
