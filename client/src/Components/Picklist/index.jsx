@@ -2,20 +2,14 @@ import React, { Component } from 'react';
 const currencies = ['GBP', 'CAD', 'EUR'];
 
 class Picklist extends Component {
-  state = {
-    value: 'Select'
-  };
-
-  handleChangeEvent = e => {
-    this.setState({
-      value: e.currentTarget.value
-    });
-  };
-
   render() {
     return (
       <div className='form-group'>
-        <select onChange={this.handleChangeEvent} value={this.state.value}>
+        <select
+          onChange={e => this.props.onChangeFn(e.target)}
+          value={this.props.value}
+          name={this.props.name}
+        >
           <option>Select</option>
           {currencies.map(currency => (
             <option key={currency.toLowerCase()}>{currency}</option>
