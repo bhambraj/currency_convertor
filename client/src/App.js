@@ -63,26 +63,37 @@ class App extends Component {
     const { amount, calculatedValue, currency, usdEquivalent } = this.state;
     return (
       <div className='App'>
-        <header className='App-header'>
-          <div className='row'>
-            <Textbox
-              onChangeFn={this.handleChange}
-              amount={amount}
-              name='amount'
-            />
-            <Picklist
-              onChangeFn={this.handleChange}
-              currency={currency}
-              name='currency'
-            />
+        <div className='App-overlay'>
+          <header className='App-header' />
+          <div className='container app-container'>
+            <div className='row amount-row'>
+              <div class='col-sm-6'>
+                <Textbox
+                  onChangeFn={this.handleChange}
+                  amount={amount}
+                  name='amount'
+                />
+              </div>
+              <div class='col-sm-4'>
+                <Picklist
+                  onChangeFn={this.handleChange}
+                  currency={currency}
+                  name='currency'
+                />
+              </div>
+              <div class='col-sm-2'>
+                <p>
+                  {amount} {currency} = {calculatedValue} USD
+                </p>
+              </div>
+            </div>
+            <div className='row'>
+              <p>
+                Exchange Rate of 1 {currency} : {usdEquivalent} USD
+              </p>
+            </div>
           </div>
-          <div className='row'>
-            <p>
-              Exchange Rate of 1 {currency} : {usdEquivalent} USD
-              {amount} {currency} = {calculatedValue} USD
-            </p>
-          </div>
-        </header>
+        </div>
       </div>
     );
   }
