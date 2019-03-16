@@ -4,8 +4,7 @@
   "description": "Express server for currency_convertor",
   "main": "server.js",
   "scripts": {
-    "test": "TODO: Write tests",
-    "server": "nodemon server.js"
+    "server": "node server.js"
   },
   "author": "Jaskaran Bhambra",
   "license": "MIT",
