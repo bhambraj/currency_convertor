@@ -101,7 +101,7 @@ class App extends Component {
                   name='currency'
                 />
               </div>
-              {amount && currency && calculatedValue && (
+              {amount && currency && (
                 <div className='form-row show-money'>
                   <p>
                     {amount} {currency}
@@ -109,7 +109,7 @@ class App extends Component {
                   <p> {calculatedValue} USD</p>
                 </div>
               )}
-              {currency && usdEquivalent && (
+              {amount && currency && (
                 <div className='form-row show-money'>
                   <p> Echange Rate</p>
                   <p>
@@ -117,7 +117,7 @@ class App extends Component {
                   </p>
                 </div>
               )}
-              {exchangeTime && (
+              {amount && currency && (
                 <div className='form-row show-money'>
                   <p> Echange Rate as of</p>
                   <p> {exchangeTime}</p>
