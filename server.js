@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 5000;
 const cors = require('cors');
+const path = require('path');
 
 // Stores the conversion factor that will be multiplied by input from the fron-end
 let conversionFactor = 0;
@@ -11,6 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const port = process.env.port | 5000;
 /*
  *   Calculates exchange rates for input from the request
  *   Conversion Algorithm: input X (2 + random markup between 0 and 1)
@@ -32,6 +33,15 @@ app.post('/api/getRates', (req, res) => {
     exchangeTime: new Date().toUTCString()
   });
 });
+
+// Serve static build(In production)
+if (process.env.NODE_ENV === 'production') {
+  // Static folder
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 app.listen(port, err => {
   if (err) {
     throw err;
