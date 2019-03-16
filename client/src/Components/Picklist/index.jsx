@@ -10,7 +10,7 @@ class Picklist extends Component {
         value={this.props.value}
         name={this.props.name}
       >
-        <option>Select</option>
+        <option value=''>Select</option>
         {currencies.map(currency => (
           <option key={currency.toLowerCase()}>{currency}</option>
         ))}

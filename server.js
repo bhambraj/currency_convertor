@@ -28,10 +28,14 @@ app.post('/api/getRates', (req, res) => {
   }
   res.send({
     calculatedValue: getParsedAmount(conversionFactor * amount),
-    usdEquivalent: conversionFactor
+    usdEquivalent: conversionFactor,
+    exchangeTime: new Date().toUTCString()
   });
 });
-app.listen(port, () => {
+app.listen(port, err => {
+  if (err) {
+    throw err;
+  }
   console.log(`Starting the server at port -> ${port}`);
   setInterval(() => {
     conversionFactor = getParsedAmount(2 + Math.random());

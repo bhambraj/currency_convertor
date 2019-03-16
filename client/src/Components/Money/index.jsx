@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-class Textbox extends Component {
+import './index.css';
+
+class Money extends Component {
   render() {
     return (
       <div className='input-group'>
-        <div className='input-group-prepend '>
-          <span className='input-group-text'>$</span>
-        </div>
         <input
+          className='form-control'
           type='number'
+          min='0'
           name={this.props.name}
           placeholder='Amount'
           onChange={e => this.props.onChangeFn(e.target)}
-          value={this.props.value}
+          value={this.props.amount}
         />
-        <div className='input-group-append'>
-          <span className='badge badge-danger'>X</span>
-        </div>
+        <span
+          className='input-group-addon btn btn-danger mobile-visible-only'
+          onClick={this.props.clearAmountFn}
+        >
+          X
+        </span>
       </div>
     );
   }
 }
 
-export default Textbox;
+export default Money;

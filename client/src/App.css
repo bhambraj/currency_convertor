@@ -6,36 +6,40 @@
   opacity: 0.75;
 }
 .App-header {
-  min-height: 40vh;
+  min-height: 30vh;
   display: flex;
   color: white;
 }
 
 .app-container {
-  min-height: 60vh;
-  flex-direction: row;
+  min-height: 70vh;
 }
-.amount-row {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  font-size: calc(5px + 2vmin);
-  color: white;
-  min-height: 10vh;
+.main-controls {
+  max-width: 40vw;
+  margin: auto;
 }
-.currency-row {
-  /* background-color: lightblue; */
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  font-size: calc(5px + 2vmin);
-  color: white;
-  min-height: 10vh;
+.form-row {
+  margin: auto;
+  margin-top: 2%;
+  text-align: center;
 }
-.exchange-r {
-  min-height: 5vh;
-  align-items: center;
-  justify-content: center;
-  display: flex;
+
+label {
+  font-style: normal;
+  font-family: sans-serif;
+  font-weight: 900;
   color: white;
+}
+.show-money {
+  display: flex;
+  color: wheat;
+  font-style: normal;
+  font-family: sans-serif;
+  font-weight: 900;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.show-money p {
+  flex: 1;
+  align-items: center;
 }

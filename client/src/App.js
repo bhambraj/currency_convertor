@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Picklist from './Components/Picklist/index';
-import Textbox from './Components/Textbox/index';
+import Money from './Components/Money/index';
 
 import './App.css';
 
 class App extends Component {
   state = {
     amount: 0,
-    currency: '',
-    calculatedValue: 0,
-    usdEquivalent: 0
+    currency: undefined,
+    calculatedValue: undefined,
+    usdEquivalent: undefined,
+    exchangeTime: undefined
   };
 
   postCurrencyExchange = async (opts = {}) => {
@@ -48,49 +49,80 @@ class App extends Component {
       amount: controlName === 'amount' ? changedValue : this.state.amount
     })
       .then(result => {
-        const { calculatedValue, usdEquivalent } = result;
+        const { calculatedValue, usdEquivalent, exchangeTime } = result;
         this.setState({
           calculatedValue,
-          usdEquivalent
+          usdEquivalent,
+          exchangeTime
         });
       })
       .catch(err => {
-        console.log('err -> ', err, '\n');
+        throw err;
       });
   };
 
+  clearAmount = () => {
+    this.setState({
+      amount: 0
+    });
+  };
+
   render() {
-    const { amount, calculatedValue, currency, usdEquivalent } = this.state;
+    const {
+      amount,
+      calculatedValue,
+      currency,
+      usdEquivalent,
+      exchangeTime
+    } = this.state;
+
     return (
       <div className='App'>
         <div className='App-overlay'>
           <header className='App-header' />
-          <div className='container app-container'>
-            <div className='row amount-row'>
-              <div class='col-sm-6'>
-                <Textbox
+          <div className='app-container'>
+            <div className='main-controls'>
+              <div className='form-row'>
+                <label>Amount:</label>
+                <Money
+                  className='your-input'
                   onChangeFn={this.handleChange}
+                  clearAmountFn={this.clearAmount}
                   amount={amount}
                   name='amount'
                 />
               </div>
-              <div class='col-sm-4'>
+              <div className='form-row'>
+                <label>Currency:</label>
                 <Picklist
+                  className='your-input'
                   onChangeFn={this.handleChange}
                   currency={currency}
                   name='currency'
                 />
               </div>
-              <div class='col-sm-2'>
-                <p>
-                  {amount} {currency} = {calculatedValue} USD
-                </p>
-              </div>
-            </div>
-            <div className='row'>
-              <p>
-                Exchange Rate of 1 {currency} : {usdEquivalent} USD
-              </p>
+              {amount && currency && calculatedValue && (
+                <div className='form-row show-money'>
+                  <p>
+                    {amount} {currency}
+                  </p>
+                  <p> {calculatedValue} USD</p>
+                </div>
+              )}
+              {currency && usdEquivalent && (
+                <div className='form-row show-money'>
+                  <p> Echange Rate</p>
+                  <p>
+                    1{currency} = {usdEquivalent} USD
+                  </p>
+                </div>
+              )}
+              {exchangeTime && (
+                <div className='form-row show-money'>
+                  <p> Echange Rate as of</p>
+                  <p> {exchangeTime}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

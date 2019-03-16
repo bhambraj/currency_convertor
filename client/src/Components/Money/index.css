@@ -1,0 +1,6 @@
+/* only visible for screens with width 360 or less */
+@media only screen and (min-width: 361px) {
+  .mobile-visible-only {
+    display: none;
+  }
+}
