@@ -6,11 +6,11 @@ import './App.css';
 
 class App extends Component {
   state = {
-    amount: 0,
-    currency: undefined,
-    calculatedValue: undefined,
-    usdEquivalent: undefined,
-    exchangeTime: undefined
+    amount: 0, // cannot be set to null as it is passed as a value of input control
+    currency: null,
+    calculatedValue: null,
+    usdEquivalent: null,
+    exchangeTime: null
   };
 
   postCurrencyExchange = async (opts = {}) => {
