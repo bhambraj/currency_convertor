@@ -27,6 +27,14 @@ app.post('/api/getRates', (req, res) => {
   } else {
     amount = 0;
   }
+
+  console.log('Amount after the if -> ', amount);
+  console.log('conversionFactor -> ', conversionFactor);
+  console.log(
+    'getParsedAmount(conversionFactor * amount) -> ',
+    getParsedAmount(conversionFactor * amount)
+  );
+
   res.send({
     calculatedValue: getParsedAmount(conversionFactor * amount),
     usdEquivalent: conversionFactor,
