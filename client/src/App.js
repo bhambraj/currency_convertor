@@ -3,7 +3,8 @@ import Picklist from './Components/Picklist/index';
 import Money from './Components/Money/index';
 
 import './App.css';
-const serverApi = 'https://nameless-lake-76516.herokuapp.com/api/getRates';
+
+const apiHostUrl = process.env.REACT_APP_HOST_API_URL || 'localhost:5000';
 
 class App extends Component {
   state = {
@@ -15,7 +16,7 @@ class App extends Component {
   };
 
   postCurrencyExchange = async (opts = {}) => {
-    const response = await fetch(serverApi, {
+    const response = await fetch(`${apiHostUrl}/api/getRates`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
