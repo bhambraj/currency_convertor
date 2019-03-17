@@ -4,7 +4,8 @@ import Money from './Components/Money/index';
 
 import './App.css';
 
-const apiHostUrl = process.env.REACT_APP_HOST_API_URL || 'localhost:5000';
+const apiHostUrl =
+  process.env.REACT_APP_HOST_API_URL || 'http://localhost:5000';
 
 class App extends Component {
   state = {
