@@ -31,25 +31,47 @@ class App extends Component {
     const changedValue = target.value;
     const controlName = target.name;
     const stateToSet = {};
-    let controlThatDidNotChange;
 
     if (controlName === 'amount') {
-      controlThatDidNotChange = 'currency';
       stateToSet.amount = changedValue;
     } else {
-      controlThatDidNotChange = 'amount';
       stateToSet.currency = changedValue;
     }
-
     this.setState(stateToSet);
+  };
 
-    const valueOfControlThatDidNotChange = this.state[controlThatDidNotChange];
-    const canCallApi =
-      (changedValue && valueOfControlThatDidNotChange) || false;
+  clearAmount = () => {
+    this.setState({
+      amount: 0
+    });
+  };
 
-    if (!canCallApi) return;
+  /**
+   *
+   * @param {*} prevProps
+   * @param {*} prevState
+   *
+   * This function is called anytime component(state) updates
+   *
+   * It will request the server if amount and currency has valid value
+   * and atleast one of them has changed
+   * otherwise this function can enter in an infinite loop
+   * as we are setting state from server's response
+   */
+  componentDidUpdate(prevProps, prevState) {
+    const amountFromPreviousState = prevState.amount;
+    const currencyFromPreviousState = prevState.currency;
+    const { amount, currency } = this.state;
+
+    const amountOrCurrencyIsValid =
+      amount &&
+      currency &&
+      (amount !== amountFromPreviousState ||
+        currency !== currencyFromPreviousState);
+
+    if (!amountOrCurrencyIsValid) return;
     this.postCurrencyExchange({
-      amount: controlName === 'amount' ? changedValue : this.state.amount
+      amount
     })
       .then(result => {
         const { calculatedValue, usdEquivalent, exchangeTime } = result;
@@ -62,13 +84,7 @@ class App extends Component {
       .catch(err => {
         throw err;
       });
-  };
-
-  clearAmount = () => {
-    this.setState({
-      amount: 0
-    });
-  };
+  }
 
   render() {
     const {
