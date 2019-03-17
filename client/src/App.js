@@ -3,6 +3,7 @@ import Picklist from './Components/Picklist/index';
 import Money from './Components/Money/index';
 
 import './App.css';
+const serverApi = 'https://nameless-lake-76516.herokuapp.com/api/getRates';
 
 class App extends Component {
   state = {
@@ -14,11 +15,10 @@ class App extends Component {
   };
 
   postCurrencyExchange = async (opts = {}) => {
-    const response = await fetch('http://localhost:5000/api/getRates', {
+    const response = await fetch(serverApi, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(opts)
     });
