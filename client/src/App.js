@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Picklist from './Components/Picklist/index';
 import Money from './Components/Money/index';
+import io from 'socket.io-client';
 
 import './App.css';
 
 const apiHostUrl =
   process.env.REACT_APP_HOST_API_URL || 'http://localhost:5000';
+const socket = io.connect(apiHostUrl);
 
 class App extends Component {
   state = {
@@ -46,6 +48,12 @@ class App extends Component {
     });
   };
 
+  componentDidMount() {
+    // Updates the UI(set state) every 100ms from server data
+    socket.on('real_time_updates', realTimeData => {
+      this.setState(realTimeData);
+    });
+  }
   /**
    *
    * @param {*} prevProps
@@ -61,29 +69,32 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const amountFromPreviousState = prevState.amount;
     const currencyFromPreviousState = prevState.currency;
-    const { amount, currency } = this.state;
+    const { currency, amount } = this.state;
 
-    const amountOrCurrencyIsValid =
+    const amountOrCurrencyHasChanged =
       amount &&
       currency &&
       (amount !== amountFromPreviousState ||
         currency !== currencyFromPreviousState);
 
-    if (!amountOrCurrencyIsValid) return;
-    this.postCurrencyExchange({
-      amount
-    })
-      .then(result => {
-        const { calculatedValue, usdEquivalent, exchangeTime } = result;
-        this.setState({
-          calculatedValue,
-          usdEquivalent,
-          exchangeTime
-        });
-      })
-      .catch(err => {
-        throw err;
+    if (!amountOrCurrencyHasChanged) return;
+    /*
+     * ======================= Sockets =========================
+     * Emit amount and currency to the server if anything has changed
+     */
+    socket.emit('amount_or_currency_changed', {
+      amount,
+      currency
+    });
+    socket.on('server_calculations_changed', data => {
+      const { calculatedValue, usdEquivalent, exchangeTime } = data;
+      this.setState({
+        calculatedValue,
+        usdEquivalent,
+        exchangeTime
       });
+    });
+    return;
   }
 
   render() {
@@ -94,6 +105,7 @@ class App extends Component {
       usdEquivalent,
       exchangeTime
     } = this.state;
+    const amountAndCurrencyArePopulated = (amount && currency) || false;
 
     return (
       <div className='App'>
@@ -120,7 +132,7 @@ class App extends Component {
                   name='currency'
                 />
               </div>
-              {currency && amount && (
+              {amountAndCurrencyArePopulated && (
                 <div className='form-row show-money'>
                   <p>
                     {amount} {currency}
@@ -128,7 +140,7 @@ class App extends Component {
                   <p> {calculatedValue} USD</p>
                 </div>
               )}
-              {currency && amount && (
+              {amountAndCurrencyArePopulated && (
                 <div className='form-row show-money'>
                   <p> Echange Rate</p>
                   <p>
@@ -136,7 +148,7 @@ class App extends Component {
                   </p>
                 </div>
               )}
-              {currency && amount && (
+              {amountAndCurrencyArePopulated && (
                 <div className='form-row show-money'>
                   <p> Echange Rate as of</p>
                   <p> {exchangeTime}</p>
