@@ -24,12 +24,7 @@ const port = process.env.PORT || 5000;
  */
 app.post('/api/getRates', (req, res) => {
   let amount = req.body.amount;
-  if (amount && !isNaN(amount)) {
-    amount = getParsedAmount(amount);
-  } else {
-    amount = 0;
-  }
-
+  amount = cleanAmount(amount);
   res.send({
     calculatedValue: getParsedAmount(conversionFactor * amount),
     usdEquivalent: conversionFactor,
@@ -81,6 +76,7 @@ server.listen(port, err => {
 function getParsedAmount(value) {
   return parseFloat(value).toFixed(2);
 }
+
 function cleanAmount(amountValue) {
   if (amountValue && !isNaN(amountValue)) {
     amountValue = getParsedAmount(amountValue);
