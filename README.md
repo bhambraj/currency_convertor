@@ -1,3 +1,5 @@
+![](currency_convertor.gif)
+
 # React and Express
 
 Starter pack
