@@ -142,7 +142,7 @@ class App extends Component {
               )}
               {amountAndCurrencyArePopulated && (
                 <div className='form-row show-money'>
-                  <p> Echange Rate</p>
+                  <p> Exchange Rate</p>
                   <p>
                     1{currency} = {usdEquivalent} USD
                   </p>
@@ -150,7 +150,7 @@ class App extends Component {
               )}
               {amountAndCurrencyArePopulated && (
                 <div className='form-row show-money'>
-                  <p> Echange Rate as of</p>
+                  <p> Exchange Rate as of</p>
                   <p> {exchangeTime}</p>
                 </div>
               )}
