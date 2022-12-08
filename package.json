@@ -14,10 +14,10 @@
   "author": "Jaskaran Bhambra",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
